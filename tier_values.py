@@ -47,3 +47,14 @@ def tier_values_Metasrc (tier):
         return 2
     else:
         return 0
+    
+
+def tier_values_mobalytics (tier):
+    if tier == "S":
+        return 12
+    elif tier == "A":
+        return 8
+    elif tier == "B":
+        return 4
+    else:
+        return 0
