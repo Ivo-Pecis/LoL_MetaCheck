@@ -58,3 +58,19 @@ def tier_values_mobalytics (tier):
         return 4
     else:
         return 0
+    
+def tier_values_UGG (tier):
+    if tier == "S+":
+        return 15
+    elif tier == "S":
+        return 13
+    elif tier == "A":
+        return 11
+    elif tier == "B":
+        return 8
+    elif tier == "C":
+        return 5
+    elif tier == "D":
+        return 2
+    else:
+        return 0
