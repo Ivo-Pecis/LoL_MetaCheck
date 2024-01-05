@@ -1,3 +1,4 @@
+from tier_values import tier_values_Metasrc, average_tier_value
 import selenium
 import tier_values
 from selenium import webdriver
@@ -35,17 +36,26 @@ for i in contents:
     find = driver.find_element(By.CLASS_NAME, "_dxv0e1").text
     tier = find.replace("Tier: \n", "")
     tiers.append(tier)
+
 champion_stats= []
-for i in range (len(contents)-1):
+all_tier_values = []
+for i in range (len(contents)):
+    all_tier_values.append(tier_values_Metasrc(tiers[i]))   
+average_tier = average_tier_value(all_tier_values)
+for i in range (len(contents)):
     champion= []
+    tier_value = tier_values_Metasrc(tiers[i])
     champion.append(tiers[i])
-    champion.append(tier_values.tier_values_Metasrc(tiers[i]))
+    champion.append(tier_value)
+    champion.append(tier_value/average_tier) 
     champion_stats.append(champion)
 
 wb=load_workbook('LoLChampions.xlsx')
 ws = wb.active
 for i in range (len(champion_stats)):
     for j in range (len(champion_stats[i])):
-        ws.cell(row=i+2, column=j+4).value = champion_stats[i][j]
+        ws.cell(row=i+2, column=j+5).value = champion_stats[i][j]
 wb.save('LoLChampions.xlsx')
 wb.close()
+
+print((champion_stats))

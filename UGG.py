@@ -1,5 +1,5 @@
 import selenium
-import tier_values
+from tier_values import tier_values_UGG, average_tier_value
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -27,6 +27,8 @@ temp = find.find_element(By.ID, "super-search-bar")
 temp.send_keys("Aatrox")
 time.sleep(7)
 keyboard.press(Key.enter)
+keyboard.release(Key.enter)
+keyboard.press(Key.enter)
 keyboard.release(Key.enter) 
 time.sleep(3)
 
@@ -45,22 +47,26 @@ for i in contents:
     keyboard.release(Key.enter)
     time.sleep(3)
     find = driver.find_element(By.CLASS_NAME, "champion-tier.media-query.media-query_MOBILE_LARGE__DESKTOP_LARGE")
-    tier = find.text.replace("\n", " ").replace("Tier", "")
+    tier = find.text.replace("\n", " ").replace("Tier", "").replace(" ", "")
     tiers.append(tier)
 
 champion_stats= []
+all_tier_values = []
+for i in range (len(contents)):
+    all_tier_values.append(tier_values_UGG(tiers[i]))   
+average_tier = average_tier_value(all_tier_values)
 for i in range (len(contents)):
     champion= []
+    tier_value = tier_values_UGG(tiers[i])
     champion.append(tiers[i])
-    champion.append(tier_values.tier_values_UGG(tiers[i]))
+    champion.append(tier_value)
+    champion.append(tier_value/average_tier) 
     champion_stats.append(champion)
 
 wb=load_workbook('LoLChampions.xlsx')
 ws = wb.active
 for i in range (len(champion_stats)):
     for j in range (len(champion_stats[i])):
-        ws.cell(row=i+2, column=j+8).value = champion_stats[i][j]
+        ws.cell(row=i+2, column=j+11).value = champion_stats[i][j]
 wb.save('LoLChampions.xlsx')
 wb.close()
-
-input()

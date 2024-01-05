@@ -48,7 +48,6 @@ def tier_values_Metasrc (tier):
     else:
         return 0
     
-
 def tier_values_mobalytics (tier):
     if tier == "S":
         return 12
@@ -73,4 +72,9 @@ def tier_values_UGG (tier):
     elif tier == "D":
         return 2
     else:
-        return 0
+        return 1
+    
+def average_tier_value(tier_values):
+    average = sum(tier_values)/len(tier_values)
+    return average
+    
