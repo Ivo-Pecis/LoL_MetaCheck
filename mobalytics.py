@@ -27,7 +27,7 @@ find = driver.find_element(By.CLASS_NAME, "gradient-overlay")
 find.click()
 time.sleep(2)
 
-with open('test.txt') as f:
+with open('LoLChampions.txt') as f:
     contents = f.read().replace('\n', '').split(",")
 tiers = []
 for i in contents:

@@ -34,7 +34,7 @@ for i in contents:
     find=driver.find_element(By.CLASS_NAME, "SearchBar_search__BJeOt")
     find.click()
 
-    keyboard.type(i)
+    keyboard.type(i.replace("'", ""))
     keyboard.press(Key.enter)
     time.sleep(1)
 

@@ -32,7 +32,7 @@ keyboard.press(Key.enter)
 keyboard.release(Key.enter) 
 time.sleep(3)
 
-with open('test.txt') as f:
+with open('LoLChampions.txt') as f:
     contents = f.read().replace('\n', '').split(",")
 tiers = []
 for i in contents:
@@ -42,7 +42,7 @@ for i in contents:
     keyboard.press("a")
     keyboard.release("a")
     keyboard.release(Key.ctrl) 
-    keyboard.type(i)
+    keyboard.type(i.replace("'", ""))
     keyboard.press(Key.enter)
     keyboard.release(Key.enter)
     time.sleep(3)

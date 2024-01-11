@@ -52,9 +52,11 @@ def tier_values_mobalytics (tier):
     if tier == "S":
         return 12
     elif tier == "A":
-        return 8
+        return 9
     elif tier == "B":
-        return 4
+        return 6
+    elif tier == "C":
+        return 3
     else:
         return 0
     
