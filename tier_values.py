@@ -74,9 +74,8 @@ def tier_values_UGG (tier):
     elif tier == "D":
         return 2
     else:
-        return 1
+        return 0
     
 def average_tier_value(tier_values):
     average = sum(tier_values)/len(tier_values)
     return average
-    
