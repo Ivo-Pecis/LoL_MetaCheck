@@ -8,7 +8,6 @@ import time
 
 service = Service()
 option = webdriver.ChromeOptions()
-
 driver = webdriver.Chrome(service=service, options=option)
 
 top_tier_list = []

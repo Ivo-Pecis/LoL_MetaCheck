@@ -3,15 +3,12 @@ from tier_values import tier_values_mobalytics, average_tier_value
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from pynput.keyboard import Key, Controller
 from openpyxl import Workbook as wb, load_workbook 
 import time
-from pynput.keyboard import Key, Controller
+
 
 service = Service()
 option = webdriver.ChromeOptions()
-keyboard = Controller()
-
 driver = webdriver.Chrome(service=service, options=option)
 
 url = "https://www.mobalytics.gg"
