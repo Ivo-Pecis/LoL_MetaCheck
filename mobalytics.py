@@ -34,7 +34,7 @@ time.sleep(1)
 find = driver.find_element(By.LINK_TEXT, "High Elo Tier List")
 find.click()
 time.sleep(1)
-
+average_tier_values = []
 elements = driver.find_elements(By.CLASS_NAME, "m-kvvnsa")
 top_tier_list = []
 jg_tier_list = []
@@ -42,6 +42,8 @@ mid_tier_list = []
 adc_tier_list = []
 supp_tier_list = []
 for i in range (0,15):
+    if i%3==0:
+        all_tiers = []
     if elements:
         first_element = elements[i]
         tier = first_element.text.split("\n")
@@ -63,6 +65,7 @@ for i in range (0,15):
                     champion.append("B")
                     champion.append(tier_values_mobalytics("B"))
                 top_tier_list.append(champion)
+                all_tiers.append(champion[2])
         elif i/3 < 2:
             for j in range(len(tier)):
                 champion = []
@@ -81,6 +84,7 @@ for i in range (0,15):
                     champion.append("B")
                     champion.append(tier_values_mobalytics("B"))
                 jg_tier_list.append(champion)
+                all_tiers.append(champion[2])
         elif i/3 < 3:
             for j in range(len(tier)):
                 champion = []
@@ -99,6 +103,7 @@ for i in range (0,15):
                     champion.append("B")
                     champion.append(tier_values_mobalytics("B"))
                 mid_tier_list.append(champion)
+                all_tiers.append(champion[2])
         elif i/3 < 4:
             for j in range(len(tier)):
                 champion = []
@@ -117,6 +122,7 @@ for i in range (0,15):
                     champion.append("B")
                     champion.append(tier_values_mobalytics("B"))
                 adc_tier_list.append(champion)
+                all_tiers.append(champion[2])
         elif i/3 < 5:
             for j in range(len(tier)):
                 champion = []
@@ -137,6 +143,9 @@ for i in range (0,15):
                     champion.append("B")
                     champion.append(tier_values_mobalytics("B"))
                 supp_tier_list.append(champion)
+                all_tiers.append(champion[2])
+    if i%3==2:
+        average_tier_values.append(average_tier_value(all_tiers))
 top_tier_list.sort(key=lambda x: x[0])
 jg_tier_list.sort(key=lambda x: x[0])
 mid_tier_list.sort(key=lambda x: x[0])
@@ -152,7 +161,7 @@ count = 0
 for i in range(0,len(contents)):    
     if contents[i] == (top_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=4).value = top_tier_list[count][1]
-        ws.cell(row=i+2, column=5).value = top_tier_list[count][2]
+        ws.cell(row=i+2, column=5).value = top_tier_list[count][2]/average_tier_values[0]
         if count < len(top_tier_list)-1:
             count += 1
     else:
@@ -163,7 +172,7 @@ ws=wb['JG']
 for i in range(0,len(contents)):
     if contents[i] == (jg_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=4).value = jg_tier_list[count][1]
-        ws.cell(row=i+2, column=5).value = jg_tier_list[count][2]
+        ws.cell(row=i+2, column=5).value = jg_tier_list[count][2]/average_tier_values[1]
         if count < len(jg_tier_list)-1:
             count += 1
     else:
@@ -174,7 +183,7 @@ count = 0
 for i in range(0,len(contents)): 
     if contents[i] == (mid_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=4).value = mid_tier_list[count][1]
-        ws.cell(row=i+2, column=5).value = mid_tier_list[count][2]
+        ws.cell(row=i+2, column=5).value = mid_tier_list[count][2]/average_tier_values[2]
         if count < len(mid_tier_list)-1:
             count += 1
     else:
@@ -185,7 +194,7 @@ count = 0
 for i in range(0,len(contents)):
     if contents[i] == (adc_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=4).value = adc_tier_list[count][1]
-        ws.cell(row=i+2, column=5).value = adc_tier_list[count][2]
+        ws.cell(row=i+2, column=5).value = adc_tier_list[count][2]/average_tier_values[3]
         if count < len(adc_tier_list)-1:
             count += 1
     else:
@@ -196,7 +205,7 @@ count = 0
 for i in range(0,len(contents)):
     if contents[i] == (supp_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=4).value = supp_tier_list[count][1]
-        ws.cell(row=i+2, column=5).value = supp_tier_list[count][2]
+        ws.cell(row=i+2, column=5).value = supp_tier_list[count][2]/average_tier_values[4]
         if count < len(supp_tier_list)-1:
             count += 1
     else:
@@ -204,3 +213,4 @@ for i in range(0,len(contents)):
         ws.cell(row=i+2, column=5).value = 0
 wb.save('LoLChampions.xlsx')
 wb.close()
+print(average_tier_values)

@@ -36,12 +36,12 @@ time.sleep(3)
 find = driver.find_element(By.CLASS_NAME, "ncmp__btn.ncmp__btn-danger")
 find.click()
 time.sleep(2)
-
+average_tier_values = []
 for role, tier_list in role_tier_lists.items():
     url = f"https://lolalytics.com/lol/tierlist/?lane={role}"
     driver.get(url)
     time.sleep(2)
-
+    all_tiers = []
     elements = driver.find_elements(By.CLASS_NAME, "TierList_list__j33gd")
     if elements:
             for i in range(len(elements)):
@@ -61,7 +61,9 @@ for role, tier_list in role_tier_lists.items():
                             tiers.append(champion_name)
                             tiers.append(champion_tier)
                             tiers.append(tier_values_LoLalytics(champion_tier))
+                            all_tiers.append(tiers[2])
                             tier_list.append(tiers)
+    average_tier_values.append(average_tier_value(all_tiers))
 top_tier_list.sort(key=lambda x: x[0])
 jg_tier_list.sort(key=lambda x: x[0])
 mid_tier_list.sort(key=lambda x: x[0])
@@ -76,7 +78,7 @@ count = 0
 for i in range(0,len(contents)):    
     if contents[i] == (top_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=8).value = top_tier_list[count][1]
-        ws.cell(row=i+2, column=9).value = top_tier_list[count][2]
+        ws.cell(row=i+2, column=9).value = top_tier_list[count][2]/average_tier_values[0]
         if count < len(top_tier_list)-1:
             count += 1
     else:
@@ -87,7 +89,7 @@ ws=wb['JG']
 for i in range(0,len(contents)):
     if contents[i] == (jg_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=8).value = jg_tier_list[count][1]
-        ws.cell(row=i+2, column=9).value = jg_tier_list[count][2]
+        ws.cell(row=i+2, column=9).value = jg_tier_list[count][2]/average_tier_values[1]
         if count < len(jg_tier_list)-1:
             count += 1
     else:
@@ -98,7 +100,7 @@ count = 0
 for i in range(0,len(contents)): 
     if contents[i] == (mid_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=8).value = mid_tier_list[count][1]
-        ws.cell(row=i+2, column=9).value = mid_tier_list[count][2]
+        ws.cell(row=i+2, column=9).value = mid_tier_list[count][2]/average_tier_values[2]
         if count < len(mid_tier_list)-1:
             count += 1
     else:
@@ -109,7 +111,7 @@ count = 0
 for i in range(0,len(contents)):
     if contents[i] == (adc_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=8).value = adc_tier_list[count][1]
-        ws.cell(row=i+2, column=9).value = adc_tier_list[count][2]
+        ws.cell(row=i+2, column=9).value = adc_tier_list[count][2]/average_tier_values[3]
         if count < len(adc_tier_list)-1:
             count += 1
     else:
@@ -120,7 +122,7 @@ count = 0
 for i in range(0,len(contents)):
     if contents[i] == (supp_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=8).value = supp_tier_list[count][1]
-        ws.cell(row=i+2, column=9).value = supp_tier_list[count][2]
+        ws.cell(row=i+2, column=9).value = supp_tier_list[count][2]/average_tier_values[4]
         if count < len(supp_tier_list)-1:
             count += 1
     else:

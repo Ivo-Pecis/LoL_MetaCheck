@@ -61,13 +61,13 @@ for role, tier_values_list in role_tier_values.items():
         else:
             tier_value = "Value not found"
 
-
+average_tier_values = []
 for role, tier_list in role_tier_lists.items():
     url = f"https://www.metasrc.com/lol/tier-list/{role}"
     driver.get(url)
     time.sleep(0.5)
     elements = driver.find_elements(By.CLASS_NAME, "_ate82z")
-    
+    all_tiers = []
     
     for element in elements:
         tier_name = element.find_element(By.TAG_NAME, "a").text.strip()
@@ -100,6 +100,7 @@ for role, tier_list in role_tier_lists.items():
                     championer.append("D")
                     championer.append(tier_values_Metasrc(championer[1]))
                 tier_list.append(championer)
+                all_tiers.append(championer[2])
             elif role == "jungle":
                 championer = []
                 championer.append(champion_name)
@@ -121,7 +122,8 @@ for role, tier_list in role_tier_lists.items():
                 elif float(tier_name) > float(jg_tier_values[5][:5]):
                     championer.append("D")
                     championer.append(tier_values_Metasrc(championer[1]))
-                tier_list.append(championer)    
+                tier_list.append(championer) 
+                all_tiers.append(championer[2])   
             elif role == "mid":
                 championer = []
                 championer.append(champion_name)
@@ -143,7 +145,8 @@ for role, tier_list in role_tier_lists.items():
                 elif float(tier_name) > float(mid_tier_values[5][:5]):
                     championer.append("D")
                     championer.append(tier_values_Metasrc(championer[1]))
-                tier_list.append(championer)    
+                tier_list.append(championer)
+                all_tiers.append(championer[2])    
             elif role == "adc":
                 championer = []
                 championer.append(champion_name)
@@ -165,7 +168,8 @@ for role, tier_list in role_tier_lists.items():
                 elif float(tier_name) > float(adc_tier_values[5][:5]):
                     championer.append("D")
                     championer.append(tier_values_Metasrc(championer[1]))
-                tier_list.append(championer)    
+                tier_list.append(championer)
+                all_tiers.append(championer[2])    
             if role == "support":
                 championer = []
                 championer.append(champion_name)
@@ -187,8 +191,9 @@ for role, tier_list in role_tier_lists.items():
                 elif float(tier_name) > float(supp_tier_values[5][:5]):
                     championer.append("D")
                     championer.append(tier_values_Metasrc(championer[1]))
-                tier_list.append(championer)    
-
+                tier_list.append(championer)
+                all_tiers.append(championer[2])    
+    average_tier_values.append(average_tier_value(all_tiers))
 top_tier_list.sort(key=lambda x: x[0])
 jg_tier_list.sort(key=lambda x: x[0])
 mid_tier_list.sort(key=lambda x: x[0])
@@ -203,7 +208,7 @@ for i in range(0,len(contents)):
     ws.cell(row=i+2, column=1).value = contents[i]    
     if contents[i] == (top_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=2).value = top_tier_list[count][1]
-        ws.cell(row=i+2, column=3).value = top_tier_list[count][2]
+        ws.cell(row=i+2, column=3).value = float(top_tier_list[count][2]/average_tier_values[0])
         if count < len(top_tier_list)-1:
             count += 1
     else:
@@ -215,7 +220,7 @@ for i in range(0,len(contents)):
     ws.cell(row=i+2, column=1).value = contents[i]    
     if contents[i] == (jg_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=2).value = jg_tier_list[count][1]
-        ws.cell(row=i+2, column=3).value = jg_tier_list[count][2]
+        ws.cell(row=i+2, column=3).value = float(jg_tier_list[count][2]/average_tier_values[1])
         if count < len(jg_tier_list)-1:
             count += 1
     else:
@@ -227,7 +232,7 @@ for i in range(0,len(contents)):
     ws.cell(row=i+2, column=1).value = contents[i]    
     if contents[i] == (mid_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=2).value = mid_tier_list[count][1]
-        ws.cell(row=i+2, column=3).value = mid_tier_list[count][2]
+        ws.cell(row=i+2, column=3).value = float(mid_tier_list[count][2]/average_tier_values[2])
         if count < len(mid_tier_list)-1:
             count += 1
     else:
@@ -239,7 +244,7 @@ for i in range(0,len(contents)):
     ws.cell(row=i+2, column=1).value = contents[i]    
     if contents[i] == (adc_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=2).value = adc_tier_list[count][1]
-        ws.cell(row=i+2, column=3).value = adc_tier_list[count][2]
+        ws.cell(row=i+2, column=3).value = float(adc_tier_list[count][2]/average_tier_values[3])
         if count < len(adc_tier_list)-1:
             count += 1
     else:
@@ -251,7 +256,7 @@ for i in range(0,len(contents)):
     ws.cell(row=i+2, column=1).value = contents[i]    
     if contents[i] == (supp_tier_list[count][0]).upper():
         ws.cell(row=i+2, column=2).value = supp_tier_list[count][1]
-        ws.cell(row=i+2, column=3).value = supp_tier_list[count][2]
+        ws.cell(row=i+2, column=3).value = float(supp_tier_list[count][2]/average_tier_values[4])
         if count < len(supp_tier_list)-1:
             count += 1
     else:
