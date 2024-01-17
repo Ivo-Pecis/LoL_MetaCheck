@@ -76,6 +76,20 @@ def tier_values_UGG (tier):
     else:
         return 0
     
+def tier_values_blitz (tier):
+
+    if tier == "S":
+        return 13
+    elif tier == "A":
+        return 11
+    elif tier == "B":
+        return 8
+    elif tier == "C":
+        return 5
+
+    else:
+        return 0
+    
 def average_tier_value(tier_values):
     average = sum(tier_values)/len(tier_values)
     return average
