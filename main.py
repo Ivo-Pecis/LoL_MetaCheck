@@ -4,10 +4,12 @@ from mobalytics import mobalytics
 from UGG import UGG
 from blitz import blitz
 from lolalytics import lolalytics
+from average import Average_values
 
-OPGG()
 metasrc()
 mobalytics()
-UGG()
 blitz()
 lolalytics()
+UGG()
+OPGG()
+Average_values()

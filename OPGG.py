@@ -67,7 +67,8 @@ def OPGG():
     jg_tier_list.sort(key=lambda x: x[0])
     mid_tier_list.sort(key=lambda x: x[0])
     adc_tier_list.sort(key=lambda x: x[0])
-    supp_tier_list.sort(key=lambda x: x[0])
+    supp_tier_list.sort(key=lambda x: x[0])  
+    
     wb=load_workbook('LoLChampions.xlsx')
     ws=wb['TOP']
     count = 0
